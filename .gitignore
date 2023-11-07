@@ -1,0 +1,44 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Environment
+.env
+
+# npm package files
+package-lock.json
+npm-debug.log
+
+# Express.js
+coverage/
+
+# MongoDB
+dump/
+*.tsv
+*.csv
+
+# Editor-related files
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Desktop.ini
