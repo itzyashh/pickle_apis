@@ -1,0 +1,15 @@
+{
+  "name": "pickle_apis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "yash j",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
+  }
+}
