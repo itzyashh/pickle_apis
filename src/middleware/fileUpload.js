@@ -57,10 +57,7 @@ const upload = multer({
             cb('Error: Images and videos only! (jpeg, jpg, png, mp4, mov)');
         }
     }
-}).fields([
-    // Define the fields for file uploads
-    { name: 'files', maxCount: 5 },
-]);
+}).array('files', 5);
 
 // Export the multer configuration for file uploads
 export default promisify(upload);

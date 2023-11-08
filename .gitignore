@@ -42,3 +42,8 @@ Thumbs.db
 
 # Windows
 Desktop.ini
+
+# uploads
+
+src/public/uploads
+```

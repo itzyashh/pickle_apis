@@ -6,6 +6,6 @@ import upload from '../../middleware/fileUpload.js';
 const router = express.Router();
 
 router.post('/createPost',upload ,postController.createPost);
-router.post('/getPosts', postController.getPosts);
+router.get('/getPosts', postController.getPosts);
 
 export default router;
