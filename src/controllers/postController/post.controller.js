@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 const baseUrl = 'http://localhost:3000/';
 
 const createPost = async (req, res) => {
-    console.log('createPost')
     try {
         console.log(req.files)
         const files = req.files
@@ -27,7 +26,7 @@ const createPost = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-    console.log('getPosts')
+
     try {
         const result = await PostModel.find({});
         res.status(200).json({ result ,length:result.length });
