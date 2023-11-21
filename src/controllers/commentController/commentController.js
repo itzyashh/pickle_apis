@@ -42,10 +42,21 @@ const deleteComment = async (req, res) => {
 }
 
 const postComments = async (req, res) => {
-    const {post_id} = req.query;
+    const {post_id,page,limit} = req.query;
+    const totalComments = await CommentModel.countDocuments({ post_id});
+    console.log(totalComments);
+
+
+    const totalPage = Math.ceil(totalComments / limit);
+    const startIndex = (page - 1) * limit;
+    console.log(startIndex);
     try {
-        const result = await CommentModel.find({ post_id}).populate({path:'user_id',select:'userName fullName'})
-        res.status(200).json({ result ,totalComments:result.length });
+        const result = await CommentModel.find({ post_id}).populate({path:'user_id',select:'userName fullName'}).skip(startIndex).limit(limit).exec();
+        res.status(200).json({ result ,totalComments:result.length,
+            totalPage: totalPage,
+            currentPage: page,
+        
+        });
     } catch (error) {
         
     }
