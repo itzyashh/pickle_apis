@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     },
+    validOTP:{
+        type:Boolean,
+        default:false
+    },
     device_type: {
         type: String,
         default: null
