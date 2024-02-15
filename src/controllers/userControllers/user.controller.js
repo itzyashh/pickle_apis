@@ -8,6 +8,8 @@ const createUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(req.body.password, 12);
         const result = await UserModel.create({...req.body, password: hashedPassword});
+        const token = jwt.sign({email: result.email, id: result._id}, process.env.TOKEN_KEY, {expiresIn: "4 days"});
+        result.token = token;
         res.status(201).json({ result });
     } catch (error) {
         res.status(500).json({status:'success', message: "Something went wrong" });
@@ -24,7 +26,7 @@ const loginUser = async (req, res) => {
         const token = jwt.sign({email: result.email, id: result._id}, process.env.TOKEN_KEY, {expiresIn: "4 days"});
         const deepClone = JSON.parse(JSON.stringify(result));
         delete deepClone.password;
-        res.status(200).json({ deepClone , token });
+        res.status(200).json({ ...deepClone , token });
     } catch (error) {
         res.status(500).json({status:'success', message: "Something went wrong" });
         console.log(error);
