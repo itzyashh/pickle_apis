@@ -2,32 +2,33 @@
 import multer from "multer";
 import path from "path";
 import { promisify } from "util";
+import { S3Client } from '@aws-sdk/client-s3';
+import multerS3 from "multer-s3";
 
 /**
  * Multer disk storage configuration for file uploads
  * @type {Object}
  */
 
-const storage = multer.diskStorage({
-    /**
-     * Destination folder for uploaded files
-     * @param {Object} req - Express request object
-     * @param {Object} file - Uploaded file object
-     * @param {Function} cb - Callback function to call when done
-     */
-    destination: function (req, file, cb) {
-        cb(null, 'src/public/uploads');
+const s3 = new S3Client({ 
+    credentials: {
+        accessKeyId: process.env.S3_ACCESS_ID,
+        secretAccessKey: process.env.S3_SECRET_KEY
     },
-    /**
-     * Filename for uploaded files
-     * @param {Object} req - Express request object
-     * @param {Object} file - Uploaded file object
-     * @param {Function} cb - Callback function to call when done
-     */
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+    region: process.env.S3_REGION
+ });
+
+const storage = multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
     }
-});
+  })
 
 /**
  * Multer configuration for file uploads
@@ -57,7 +58,7 @@ const upload = multer({
             cb('Error: Images and videos only! (jpeg, jpg, png, mp4, mov)');
         }
     }
-}).array('files', 5);
+})
 
 // Export the multer configuration for file uploads
-export default promisify(upload);
+export default upload;
