@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
         const media = files.map((file,i)=>{
             return {
                 type: file.mimetype == 'image/jpeg' || file.mimetype == 'image/png' ? 'image' : 'video',
-                url: baseUrl + file.filename
+                url: file.location
             }
         })
 

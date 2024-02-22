@@ -5,6 +5,10 @@ const mediaSchema = new mongoose.Schema({
         type: String,
         enum: ['image', 'video'],
         required: false
+    },
+    url: {
+        type: String,
+        required: true
     }
 });
 
