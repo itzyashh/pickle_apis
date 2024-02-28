@@ -58,8 +58,8 @@ const fileUpload = async (req, res) => {
 }
 
 const getPosts = async (req, res) => {
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
+    const page = parseInt(req.query.page) ?? 1;
+    const limit = parseInt(req.query.limit) ?? 10;
     const user_id = req.query.user_id;
     const totalPosts = await PostModel.countDocuments({});
     console.log(totalPosts);
