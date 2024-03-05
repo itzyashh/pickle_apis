@@ -55,8 +55,19 @@ const otpVerify = async (req, res) => {
     
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        const result = await UserModel.find().select('-password');
+        res.status(200).json({ result });
+    } catch (error) {
+        res.status(500).json({status:'success', message: "Something went wrong" });
+        console.log(error);
+    }
+}
+
 export default {
     createUser,
     loginUser,
-    otpVerify
+    otpVerify,
+    getAllUsers
 }
