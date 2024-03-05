@@ -148,8 +148,37 @@ const getPosts = async (req, res) => {
     }
 }
 
+const myPosts = async (req, res) => {
+    const {user_id,page,limit} = req.query;
+
+    if(!user_id){
+        return res.status(400).json({status:'error',message:'user_id is required'});
+    }
+
+    const totalPosts = await PostModel.countDocuments({user_id}).catch((err) => console.log('err',err));
+    console.log(totalPosts);
+
+
+    const totalPage = Math.ceil(totalPosts / limit);
+    const startIndex = (page - 1) * limit;
+    console.log(startIndex);
+    try {
+        const result = await PostModel.find({ user_id}).populate({path:'user_id',select:'userName fullName'}).skip(startIndex).limit(limit).exec();
+        res.status(200).json({ result ,totalPosts:result.length,
+            totalPage: totalPage,
+            currentPage: page,
+        
+        });
+    } catch (error) {
+        
+    }
+}
+
+
+
 export default {
     createPost,
     getPosts,
-    fileUpload
+    fileUpload,
+    myPosts
 }

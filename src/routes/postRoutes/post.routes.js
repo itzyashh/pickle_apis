@@ -10,5 +10,6 @@ const router = express.Router();
 router.post('/createPost',verifyToken,fileUpload.array('file', 5) ,postController.createPost);
 router.get('/getPosts',verifyToken, postController.getPosts);
 router.post('/upload',fileUpload.single('file'),postController.fileUpload);
+router.get('/myPosts',verifyToken, postController.myPosts);
 
 export default router;
