@@ -71,7 +71,23 @@ const createGroupChat = async (req, res) => {
    }
 }
 
+const myChats = async (req, res) => {
+    console.log(req.user.id)
+    try {
+        const chats = await ChatModel.find({ users: req.user.id }).populate({
+            path: 'users',
+            select: 'userName',
+            match: { _id: { $ne: req.user.id } }
+        })
+        res.status(200).json({ data:chats });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 export default {
     createPrivateChat,
-    createGroupChat
+    createGroupChat,
+    myChats
 }

@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/createPrivateChat',verifyToken ,chatController.createPrivateChat);
 router.post('/createGroupChat',verifyToken ,chatController.createGroupChat);
+router.get('/myChats',verifyToken ,chatController.myChats);
 
 export default router;

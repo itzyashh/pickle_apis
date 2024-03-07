@@ -10,7 +10,7 @@ const chatSchema = new mongoose.Schema({
         default: "private"
     },
     users: [{ type: ObjectId, ref: "User", required: true }],
-    lastMessage: { type: {}, ref: "User" },
+    lastMessage: { type: ObjectId, ref: "User" },
     groupAdmin: { type: ObjectId, ref: "User"}
 
 
