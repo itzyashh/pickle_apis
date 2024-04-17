@@ -4,7 +4,7 @@ import ChatModel from '../../models/chat.js';
 
 
 const createPrivateChat = async (req, res) => {
-
+    console.log('reqbody',req.body)
     const {userId} = req.body;
 
     let userIds = [req.user.id,userId]
@@ -73,12 +73,15 @@ const createGroupChat = async (req, res) => {
 
 const myChats = async (req, res) => {
     console.log(req.user.id)
+    console.log('my chats',req.user.id)
     try {
         const chats = await ChatModel.find({ users: req.user.id }).populate({
             path: 'users',
-            select: 'userName',
-            match: { _id: { $ne: req.user.id } }
-        })
+            select: 'userName'
+
+        }).catch(err => {
+            console.log('err populating', err)
+        });
         res.status(200).json({ data:chats });
     } catch (error) {
         console.log(error)

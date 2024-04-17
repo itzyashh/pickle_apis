@@ -47,11 +47,13 @@ const sendMessage = async (req, res) => {
 
     await message.save();
     await ChatModel.findByIdAndUpdate(chatId,{
-        lastMessage: message._id,
+        lastMessage: text,
     },{
         new: true
     }
-    )
+    ).catch((error) => {
+        console.log(' error in updating chat last message', error)
+    })
 
     res.status(201).json({ message: "Message sent successfully!", data: message });
     }
