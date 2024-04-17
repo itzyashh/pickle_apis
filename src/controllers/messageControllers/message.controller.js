@@ -11,7 +11,7 @@ import MessageModel from '../../models/message.js';
 //     try {
 //     const message = new MessageModel({
 //         text,
-//         senderId: req.user.id,
+//         user: req.user.id,
 //         chatId,
 //     });
 
@@ -41,7 +41,7 @@ const sendMessage = async (req, res) => {
     try {
     const message = new MessageModel({
         text,
-        senderId: req.user.id,
+        user: req.user.id,
         chatId,
     });
 
@@ -64,10 +64,10 @@ const sendMessage = async (req, res) => {
 }
 
 const myMessages= async (req, res) => {
-    const { chatId } = req.body;    
+    const { chatId } = req.query;    
     try {
         const messages= await MessageModel.find({ chatId }).populate({
-            path: 'senderId',
+            path: 'user',
             select: 'userName',
         })
         res.status(200).json({ data:messages});
