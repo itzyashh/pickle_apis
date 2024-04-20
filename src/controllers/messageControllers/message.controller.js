@@ -64,12 +64,15 @@ const sendMessage = async (req, res) => {
 }
 
 const myMessages= async (req, res) => {
-    const { chatId } = req.query;    
+    const chatId = req.query.chatId;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
     try {
         const messages= await MessageModel.find({ chatId }).populate({
             path: 'user',
             select: 'userName',
-        })
+        }).sort({ createdAt: -1 }).skip(skip).limit(limit);
         res.status(200).json({ data:messages});
     } catch (error) {
         console.log(error)
